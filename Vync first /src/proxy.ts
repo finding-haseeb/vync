@@ -23,7 +23,11 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000']
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://vync-rosy.vercel.app',
+]
 
 const corsOptions = {
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -34,7 +38,8 @@ const isProtectedRoutes = createRouteMatcher(['/dashboard(.*)', '/payment(.*)'])
 
 export default clerkMiddleware(async (auth, req: NextRequest) => {
   const origin = req.headers.get('origin') ?? ''
-  const isAllowedOrigin = allowedOrigins.includes(origin)
+  const isAllowedOrigin =
+    allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')
 
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
@@ -45,9 +50,13 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
     return NextResponse.json({}, { headers: preflightHeaders })
   }
 
-  // Handle protected routes
+  // Handle protected routes: redirect directly to sign-in if not logged in
   if (isProtectedRoutes(req)) {
-    await auth.protect()
+    const session = await auth()
+    if (!session.userId) {
+      const signInUrl = new URL('/auth/sign-in', req.url)
+      return NextResponse.redirect(signInUrl)
+    }
   }
 
   // Handle simple requests
