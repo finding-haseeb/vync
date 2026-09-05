@@ -200,6 +200,7 @@ async function createWindow() {
       devTools: true,
       preload: path.join(__dirname, "preload.mjs"),
     },
+    show: false,
   });
   floatingWebCam = new BrowserWindow({
     width: 200,
@@ -290,6 +291,7 @@ ipcMain.handle("getSources", async () => {
 });
 ipcMain.on("media-sources", (event, payload) => {
   console.log(event);
+  studio?.show();
   studio?.webContents.send("profile-received", payload);
 });
 ipcMain.on("resize-studio", (event, payload) => {
