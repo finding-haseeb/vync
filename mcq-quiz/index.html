@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCQ Practice Quiz</title>
+<meta name="description" content="Practice MCQs for Psychology of Learning (NPTEL Weeks 7-11) and Sustainability & ESD. Shuffled questions, score out of 100, and a review of your wrong answers.">
+<style>
+:root{
+  --bg:#f4f6fb; --card:#ffffff; --text:#1c2333; --muted:#5d6785; --line:#dde2ee;
+  --primary:#4361ee; --primary-ink:#ffffff; --good:#12805c; --good-bg:#e3f6ee;
+  --bad:#c0262d; --bad-bg:#fde8e9; --sel-bg:#e8edff;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1320; --card:#181d2f; --text:#e8ebf5; --muted:#9aa3bf; --line:#2a3150;
+    --primary:#7b93ff; --primary-ink:#0f1320; --good:#4ad6a0; --good-bg:#12302a;
+    --bad:#ff7a82; --bad-bg:#3a1a1f; --sel-bg:#212a4d;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1320; --card:#181d2f; --text:#e8ebf5; --muted:#9aa3bf; --line:#2a3150;
+  --primary:#7b93ff; --primary-ink:#0f1320; --good:#4ad6a0; --good-bg:#12302a;
+  --bad:#ff7a82; --bad-bg:#3a1a1f; --sel-bg:#212a4d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 60px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+h1{font-size:1.3rem;margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 2px 10px rgba(20,30,70,.05)}
+h2{margin:0 0 6px;font-size:1.15rem}
+.muted{color:var(--muted);font-size:.92rem}
+label.field{display:block;margin:16px 0 6px;font-weight:600}
+select,input[type=number]{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:1rem}
+.check{display:flex;gap:10px;align-items:center;margin:12px 0;cursor:pointer}
+.check input{width:18px;height:18px}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);padding:11px 18px}
+button.primary{background:var(--primary);color:var(--primary-ink);border-color:var(--primary);font-weight:600}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.ghost{padding:7px 12px;font-size:.9rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 18px}
+.bar>i{display:block;height:100%;background:var(--primary);transition:width .25s}
+.meta{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted)}
+.q{font-size:1.15rem;font-weight:600;margin:6px 0 16px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;margin-bottom:10px;padding:13px 14px;border:2px solid var(--line);border-radius:12px;background:var(--card)}
+.opt:hover:not(:disabled){border-color:var(--primary)}
+.opt .k{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.opt.sel{border-color:var(--primary);background:var(--sel-bg)}
+.opt.sel .k{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.opt.good{border-color:var(--good);background:var(--good-bg)}
+.opt.good .k{background:var(--good);color:var(--bg);border-color:var(--good)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .k{background:var(--bad);color:var(--bg);border-color:var(--bad)}
+.opt:disabled{opacity:1;cursor:default}
+.fb{margin-top:12px;padding:12px 14px;border-radius:10px;font-weight:600}
+.fb.good{background:var(--good-bg);color:var(--good)}
+.fb.bad{background:var(--bad-bg);color:var(--bad)}
+.score{text-align:center;padding:10px 0 4px}
+.score .big{font-size:3.6rem;font-weight:800;line-height:1;color:var(--primary)}
+.score .big small{font-size:1.3rem;color:var(--muted);font-weight:600}
+.stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0}
+.stat{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 16px;text-align:center;min-width:110px}
+.stat b{display:block;font-size:1.4rem}
+.wrong{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;background:var(--bg)}
+.wrong .q{font-size:1rem;margin:0 0 8px}
+.wrong .you{color:var(--bad)}
+.wrong .right{color:var(--good)}
+.hidden{display:none}
+footer{text-align:center;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📝 MCQ Practice Quiz</h1>
+    <button class="ghost" id="themeBtn" aria-label="Toggle theme">🌓</button>
+  </header>
+
+  <!-- START -->
+  <section id="start" class="card">
+    <h2>Set up your quiz</h2>
+    <p class="muted">Questions appear one by one. At the end you get a score out of 100, your correct count, and a list of everything you got wrong.</p>
+
+    <label class="field" for="setSel">Question set</label>
+    <select id="setSel"></select>
+
+    <label class="field" for="countInp">Number of questions <span class="muted" id="countHint"></span></label>
+    <input type="number" id="countInp" min="1" value="10">
+
+    <label class="check"><input type="checkbox" id="shufQ" checked> Shuffle question order</label>
+    <label class="check"><input type="checkbox" id="shufO" checked> Shuffle answer options</label>
+    <label class="check"><input type="checkbox" id="instant" checked> Show right/wrong after each answer</label>
+
+    <div class="actions"><button class="primary" id="startBtn">Start quiz</button></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="card hidden">
+    <div class="meta"><span id="qNum"></span><span id="setName"></span></div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="q" id="qText"></div>
+    <div id="opts"></div>
+    <div id="fb" class="fb hidden"></div>
+    <div class="actions">
+      <button class="primary" id="submitBtn" disabled>Submit answer</button>
+      <button class="primary hidden" id="nextBtn">Next</button>
+      <button class="ghost" id="quitBtn">End quiz</button>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="card hidden">
+    <div class="score">
+      <div class="muted">Your score</div>
+      <div class="big"><span id="pct">0</span><small> / 100</small></div>
+      <div id="verdict" class="muted"></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="rCorrect">0</b>Correct</div>
+      <div class="stat"><b id="rWrong">0</b>Wrong</div>
+      <div class="stat"><b id="rTotal">0</b>Total</div>
+    </div>
+    <div class="actions" style="justify-content:center">
+      <button class="primary" id="retryAll">Restart (reshuffled)</button>
+      <button id="retryWrong">Retry wrong ones</button>
+      <button id="homeBtn">Change settings</button>
+    </div>
+
+    <h2 style="margin-top:28px">❌ Your wrong answers</h2>
+    <div id="wrongList"></div>
+  </section>
+
+  <footer class="muted">Share this page with your friends — it works on any phone or laptop, no sign-up.</footer>
+</div>
+
+<script>
+/* a = array of options, c = index of the correct option */
+const SETS = [
+  { id:"w7", name:"Week 7 – Psychology of Learning", qs:[
+    {q:"Which of the following is false about learning according to Gagne’s definition?",o:["It is a change in human disposition","It persists over a period of time","It is simply ascribable to processes of growth","None of the above"],c:2},
+    {q:"Manual or physical skills come under ___ component of Bloom’s taxonomy.",o:["Cognitive","Affective","Psychomotor","Physical"],c:2},
+    {q:"Reflection, learning and education was explored by ___.",o:["Carl Rogers","John Watson","Benjamin Bloom","John Dewey"],c:3},
+    {q:"The principles of ___ refer to how close in time two events must be for a bond to be formed.",o:["behavior","reinforcement","repetition","contiguity"],c:3},
+    {q:"___ gives information to learners about their success or failure concerning the task at hand.",o:["Cognitive feedback","Emotional feedback","Reinforcement","Physical feedback"],c:0},
+    {q:"The ___ orientation to learning has a quality of personal involvement—the whole person in both feeling and cognitive aspects being in the learning event.",o:["behavioral","cognitive","humanistic","social"],c:2},
+    {q:"Learning through play is ___ learning.",o:["primary","secondary","passive","active"],c:3},
+    {q:"People with ___ learning style are prone to sorting their ideas after speaking, rather than thinking ideas through before.",o:["logical","solitary","visual","auditory"],c:3},
+    {q:"Which of the following statements is false?",o:["Effective instruction is static","Effective instruction is eclectic","Effective instruction is generative","Effective instruction is interactive"],c:0},
+    {q:"In ADDIE model, I stand for ___.",o:["instruction","implementation","integration","induction"],c:1}
+  ]},
+  { id:"w8", name:"Week 8 – Psychology of Learning", qs:[
+    {q:"The word ‘pedagogy’ has been derived from the ___ word “pedagogue”.",o:["Latin","Sanskrit","Greek","English"],c:2},
+    {q:"Which of the following statements is not true about pedagogy?",o:["It is a method or way of teaching","It is derived from the Greek word “pedagogue”","It helps a teacher understand how learning should be facilitated.","It harms the quality of teaching and learning."],c:3},
+    {q:"Pedagogy can enhance the student-teacher relationship.",o:["True","False"],c:0},
+    {q:"___ learning is based on the model that knowledge can be created within a population where members actively interact by sharing experiences and take on asymmetry roles.",o:["integrative","inquiry-based","collaborative","constructivist"],c:2},
+    {q:"The Pedagogical Model provides an overview of the learning cycle and breaks it down into ___ domains or phases of instruction.",o:["five","three","two","seven"],c:0},
+    {q:"Which of the following is not a type of inquiry-based approach?",o:["confrontation","structure","guided","open"],c:0},
+    {q:"In experiential learning, students are engaged ___.",o:["intellectually","soulfully","socially","all of the given"],c:3},
+    {q:"___ stage of experiential theory by Kolb focuses on planning.",o:["concrete experience","abstract conceptualization","reflective observation","active experimentation"],c:3},
+    {q:"People with a ___ learning style can often act on “gut feeling” and will rely on others' analysis rather than their own.",o:["accommodating","converging","diverging","assimilating"],c:0},
+    {q:"According to the ___ principle, students learn better from animation and narration than from animation and on-screen text.",o:["multimedia","modality","coherence","temporal contiguity"],c:1}
+  ]},
+  { id:"w9", name:"Week 9 – Psychology of Learning", qs:[
+    {q:"E-learning is any form of ___.",o:["teaching","training","tutoring","all of the given"],c:3},
+    {q:"___ is a feature of e-learning.",o:["difficulty in access","user friendliness","social injustice","closed learning"],c:1},
+    {q:"E-learning is a synonym of audio-visual learning, multimedia learning, and distance learning.",o:["True","False"],c:1},
+    {q:"Which of the following is not a type of e-learning?",o:["text-driven","interactive","simulation","physical"],c:3},
+    {q:"Which of the following is not a benefit of e-learning?",o:["It can accommodate the need of a housewife","People can revise the learning content as many times as they want","It facilitates in developing and communicating new training policies","None of the given"],c:3},
+    {q:"Good learners know ___.",o:["What they are learning","Why they are learning","How they are learning","All of the given"],c:3},
+    {q:"Learners may multitask when engaging in an online course, which could be resulting in ___.",o:["hyperfocus","better retrieval","shorter attention spans","None of the given"],c:2},
+    {q:"___ learning is the crucial determinant of successful e-learning.",o:["passive","retrospective","social","active"],c:3},
+    {q:"The brain can process 36,000 visual cues per ___.",o:["hour","second","day","year"],c:0},
+    {q:"For effective learning, online courses should ___.",o:["use headings","use complex language","present long pieces of text","use random images"],c:0}
+  ]},
+  { id:"w10", name:"Week 10 – Psychology of Learning", qs:[
+    {q:"During Covid-19 the world was busy in preparing 1.5 billion learners for the new normal, i.e., ___ learning.",o:["ineffective","physical","remote","experiential"],c:2},
+    {q:"To develop learner readiness for online learning, training sessions on ___ are helpful.",o:["netiquettes","time management","developing study skills","all of the given"],c:3},
+    {q:"The typical picture of a teacher being a dispenser of knowledge to the students has been replaced by that of a ___.",o:["obstructor","parent","friend","facilitator"],c:3},
+    {q:"In 2018, Global Education and Skills Forum noted that the ‘future’ teacher would need the 5 skills to thrive in the 21st century. Which of the following is not one of them?",o:["Strong social skills","Data analysis","External focus","Strictness"],c:3},
+    {q:"Participatory education demands ___ so as to build a needs-based approach to teaching.",o:["creativity","stubbornness","reward","none of the given"],c:0},
+    {q:"Students who consider intelligence as a malleable entity tend to focus on their obstacles instead of goals.",o:["True","False"],c:1},
+    {q:"Which of the following is not a principle to enhance student learning?",o:["What students already know affects their learning","Learning is context-based","Students’ cognitive development and learning is limited by the general stages of development.","The acquisition of knowledge and skills in the long term depends largely on practice."],c:2},
+    {q:"___ feedback to students is important for learning.",o:["Unclear","Late","Harsh","Explanatory"],c:3},
+    {q:"Mastery goals are those that are geared towards the acquisition or improvement of ___.",o:["Skills","Number of students in a classroom","Teacher feedback","None of the given"],c:0},
+    {q:"The vast majority of formative assessment is ___.",o:["Formal","Incorrect","Written","informal"],c:3}
+  ]},
+  { id:"w11", name:"Week 11 – Psychology of Learning", qs:[
+    {q:"Social cognition has a protracted development through infancy to ___.",o:["teenage","old-age","adulthood","death"],c:2},
+    {q:"Which of the following abilities comes under social cognition?",o:["Face processing","Joint attention","Theory of mind","All of the given"],c:3},
+    {q:"Under social cognition, abilities involved in affective processing are often called ___.",o:["hot","cold","white","black"],c:0},
+    {q:"Social schemas refer to people's mental representations of social ___.",o:["values","memories","skills","patterns"],c:3},
+    {q:"During the earliest stages of development, children are very ___-centric. They see the world from their own perspective and struggle to think about how other people may view the world.",o:["selfish","ego","conscious","emotional"],c:1},
+    {q:"A theory of mind refers to a person's ability to understand and think about the ___ of other people.",o:["behaviors","family backgrounds","mental states","language"],c:2},
+    {q:"The same social behavior in one cultural setting might have a very different meaning and interpretation if it were to occur or be observed in another culture.",o:["True","False"],c:0},
+    {q:"Social cognitive theory by Bandura focuses on concepts of ___.",o:["self-efficacy","modeling","observational learning","all of the given"],c:3},
+    {q:"The central tenet of Bandura’s social-cognitive theory is that people seek to develop a sense of ___ over the important events in their lives.",o:["agency","dependency","attachment","emotion"],c:0},
+    {q:"___ hypothesis suggests that social processes influence how information is selected, organized, integrated, and retrieved.",o:["activation","cognitive influence","interaction","social cue strength"],c:1}
+  ]},
+  { id:"sus", name:"Sustainability & ESD", qs:[
+    {q:"Sustainability in economic sustainability is ___.",o:["multidimensional","bidimensional","unidimensional","none of the given"],c:0},
+    {q:"The term \"sustainable development\" was first mentioned in a book related to the 1972 UN Stockholm conference on ___.",o:["water","poverty","economic crisis","human environment"],c:3},
+    {q:"Environmental sustainability focuses on impacts of processes, products and services on ___.",o:["water","biodiversity","human health","all of the given"],c:3},
+    {q:"Which of the following does not come under social sustainability?",o:["Labour practices","Revenue generation","Human rights","Business ethics"],c:1},
+    {q:"SDG ___ focuses on clean water and sanitation.",o:["1","17","6","3"],c:2},
+    {q:"SDG 16 focuses on ___.",o:["No poverty","No hunger","Good health","Peace and justice"],c:3},
+    {q:"On 20 October 2020, the Higher Education Sustainability Initiative (HESI) raised the flag of higher education as a driver for sustainable development and inclusive societies on the first day of the ___ 2020.",o:["National Sustainability Meeting","National Teachers Meeting","Global Childrens’ Meeting","Global Education Meeting"],c:3},
+    {q:"Education is related to all SDGs.",o:["True","False"],c:0},
+    {q:"Successful implementation of ESD requires a shift in focus from ___.",o:["teaching to learning","learning to teaching","reading to speaking","knowing to ignoring"],c:0},
+    {q:"___ competency is the ability to reflect on one’s own role in the local community and (global) society.",o:["collaboration","self-awareness","strategic","normative"],c:1}
+  ]}
+];
+
+const $ = id => document.getElementById(id);
+const show = id => ["start","quiz","result"].forEach(s => $(s).classList.toggle("hidden", s !== id));
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+// options like "all of the given" or "True/False" lose meaning when reordered
+const keepOrder = opts => opts.some(t => /^(all|none) of the (given|above)$/i.test(t.trim())) || opts.length === 2;
+
+// --- setup screen ---
+const sel = $("setSel");
+const allQs = () => SETS.flatMap(s => s.qs.map(q => ({...q, set:s.name})));
+sel.innerHTML = `<option value="all">All sets combined (${allQs().length} questions)</option>` +
+  SETS.map(s => `<option value="${s.id}">${s.name} (${s.qs.length})</option>`).join("");
+function pool(){ return sel.value==="all" ? allQs() : SETS.find(s=>s.id===sel.value).qs.map(q=>({...q,set:SETS.find(s=>s.id===sel.value).name})); }
+function syncCount(){ const n = pool().length; $("countInp").max = n; $("countHint").textContent = `(max ${n})`; if (+$("countInp").value > n || !$("countInp").value) $("countInp").value = Math.min(10,n); }
+sel.addEventListener("change", () => { $("countInp").value = pool().length; syncCount(); });
+syncCount(); $("countInp").value = 10;
+
+// --- quiz state ---
+let quiz = [], idx = 0, picked = null, answered = false, results = [], opts = {};
+
+function build(list){
+  quiz = list.map(q => {
+    const order = q.o.map((_, i) => i);
+    const final = (opts.shufO && !keepOrder(q.o)) ? shuffle(order) : order;
+    return { q:q.q, set:q.set, o:final.map(i => q.o[i]), c:final.indexOf(q.c) };
+  });
+  idx = 0; results = []; show("quiz"); render();
+}
+function startFresh(){
+  const n = Math.max(1, Math.min(+$("countInp").value || 1, pool().length));
+  opts = { shufO:$("shufO").checked, instant:$("instant").checked, shufQ:$("shufQ").checked };
+  let list = pool(); if (opts.shufQ) list = shuffle(list);
+  build(list.slice(0, n));
+}
+
+function render(){
+  const cur = quiz[idx]; picked = null; answered = false;
+  $("qNum").textContent = `Question ${idx+1} of ${quiz.length}`;
+  $("setName").textContent = cur.set;
+  $("barFill").style.width = (idx/quiz.length*100) + "%";
+  $("qText").textContent = cur.q;
+  $("fb").className = "fb hidden";
+  const box = $("opts"); box.textContent = "";
+  cur.o.forEach((t, i) => {
+    const b = document.createElement("button");
+    b.className = "opt"; b.type = "button";
+    const k = document.createElement("span"); k.className = "k"; k.textContent = "ABCD"[i];
+    const s = document.createElement("span"); s.textContent = t;
+    b.append(k, s);
+    b.addEventListener("click", () => { if (answered) return; picked = i; [...box.children].forEach((c,j)=>c.classList.toggle("sel", j===i)); $("submitBtn").disabled = false; });
+    box.append(b);
+  });
+  $("submitBtn").disabled = true; $("submitBtn").classList.remove("hidden"); $("nextBtn").classList.add("hidden");
+  $("nextBtn").textContent = idx === quiz.length-1 ? "See results" : "Next";
+}
+
+function submit(){
+  if (picked === null) return;
+  const cur = quiz[idx]; answered = true;
+  results.push({ q:cur.q, set:cur.set, yours:cur.o[picked], right:cur.o[cur.c], ok:picked===cur.c, raw:{q:cur.q,o:cur.o,c:cur.c,set:cur.set} });
+  if (opts.instant){
+    [...$("opts").children].forEach((c,i) => { c.disabled = true; c.classList.remove("sel"); if (i===cur.c) c.classList.add("good"); else if (i===picked) c.classList.add("bad"); });
+    const fb = $("fb"); fb.className = "fb " + (picked===cur.c ? "good" : "bad");
+    fb.textContent = picked===cur.c ? "✅ Correct!" : "❌ Wrong. Correct answer: " + cur.o[cur.c];
+    $("submitBtn").classList.add("hidden"); $("nextBtn").classList.remove("hidden");
+  } else next();
+}
+function next(){ if (idx < quiz.length-1){ idx++; render(); } else finish(); }
+
+function finish(){
+  const total = results.length, ok = results.filter(r=>r.ok).length;
+  const pct = total ? Math.round(ok/total*100) : 0;
+  $("pct").textContent = pct; $("rCorrect").textContent = ok; $("rWrong").textContent = total-ok; $("rTotal").textContent = total;
+  $("verdict").textContent = `${ok} correct out of ${total} questions · ` + (pct===100?"Perfect! 🏆":pct>=80?"Excellent! 🎉":pct>=60?"Good job 👍":pct>=40?"Keep practising 💪":"Review and try again 📚");
+  const wrong = results.filter(r=>!r.ok), list = $("wrongList"); list.textContent = "";
+  $("retryWrong").classList.toggle("hidden", !wrong.length);
+  if (!wrong.length){ const p=document.createElement("p"); p.className="muted"; p.textContent="No wrong answers — nice work! 🎉"; list.append(p); }
+  wrong.forEach((r,i) => {
+    const d = document.createElement("div"); d.className = "wrong";
+    const q = document.createElement("div"); q.className="q"; q.textContent = `${i+1}. ${r.q}`;
+    const y = document.createElement("div"); y.className="you"; y.textContent = "Your answer: " + r.yours;
+    const g = document.createElement("div"); g.className="right"; g.textContent = "Correct answer: " + r.right;
+    const m = document.createElement("div"); m.className="muted"; m.textContent = r.set;
+    d.append(q,y,g,m); list.append(d);
+  });
+  show("result"); window.scrollTo(0,0);
+}
+
+$("startBtn").onclick = startFresh;
+$("submitBtn").onclick = submit;
+$("nextBtn").onclick = next;
+$("quitBtn").onclick = () => { if (!results.length || confirm("End the quiz now? Your answers so far will be scored.")) results.length ? finish() : show("start"); };
+$("retryAll").onclick = startFresh;
+$("retryWrong").onclick = () => {
+  const w = results.filter(r=>!r.ok).map(r=>r.raw);
+  build(opts.shufQ ? shuffle(w) : w);
+};
+$("homeBtn").onclick = () => show("start");
+
+// keyboard: 1-4 / A-D select, Enter submit/next
+document.addEventListener("keydown", e => {
+  if ($("quiz").classList.contains("hidden")) return;
+  const k = e.key.toLowerCase(), n = "1234".indexOf(k) >= 0 ? "1234".indexOf(k) : "abcd".indexOf(k);
+  if (n >= 0 && !answered && quiz[idx].o[n] !== undefined) $("opts").children[n].click();
+  else if (e.key === "Enter"){ if (!answered && picked!==null) submit(); else if (answered) next(); }
+});
+
+// theme toggle
+$("themeBtn").onclick = () => {
+  const r = document.documentElement, dark = getComputedStyle(r).getPropertyValue("--bg").trim() === "#0f1320";
+  r.dataset.theme = dark ? "light" : "dark";
+};
+</script>
+</body>
+</html>
