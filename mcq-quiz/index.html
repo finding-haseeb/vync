@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MCQ Practice Quiz</title>
-<meta name="description" content="Practice MCQs for Psychology of Learning (NPTEL Weeks 7-11) and Sustainability & ESD. Shuffled questions, score out of 100, and a review of your wrong answers.">
+<title>MCQ Practice Quiz – haseeb_creation</title>
+<meta name="description" content="Practice MCQs for Psychology of Learning (NPTEL Weeks 0-11) and Week 12 Sustainability & ESD. Shuffled questions, score out of 100, and a review of your wrong answers.">
 <style>
 :root{
   --bg:#f4f6fb; --card:#ffffff; --text:#1c2333; --muted:#5d6785; --line:#dde2ee;
@@ -69,6 +69,8 @@ button.ghost{padding:7px 12px;font-size:.9rem}
 .wrong .right{color:var(--good)}
 .hidden{display:none}
 footer{text-align:center;margin-top:24px}
+.credit{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:1rem;color:var(--text)}
+.credit b{color:var(--primary);letter-spacing:.3px}
 </style>
 </head>
 <body>
@@ -132,12 +134,96 @@ footer{text-align:center;margin-top:24px}
     <div id="wrongList"></div>
   </section>
 
-  <footer class="muted">Share this page with your friends — it works on any phone or laptop, no sign-up.</footer>
+  <footer class="muted">Share this page with your friends — it works on any phone or laptop, no sign-up.<div class="credit">Made with ❤️ by <b>haseeb_creation</b></div></footer>
 </div>
 
 <script>
 /* a = array of options, c = index of the correct option */
 const SETS = [
+  { id:"w0", name:"Week 0 – Psychology of Learning", qs:[
+    {q:"What is Psychology?",o:["Just a social media trend", "An art of living", "A subject about human body", "A study of cognitive processes & behavior"],c:3},
+    {q:"A broad field of study that explores a variety of questions about thoughts, feelings and actions is -------?",o:["Society", "Globalization", "Psychology", "Social Science"],c:2},
+    {q:"Learning has been a central topic of research in ___.",o:["Chemistry", "Physics", "Mathematics", "Psychology"],c:3},
+    {q:"The word Psyche means -------------?",o:["Body or physique", "Mind or soul", "Spirituality", "Hormones"],c:1},
+    {q:"The ___ of learning focuses on how people learn.",o:["psychology", "english", "chemistry", "none of the given"],c:0},
+    {q:"To help people to function effectively and fulfill their own unique potential” is the aim of------ --------?",o:["Humanistic psychology", "Evolutionary biology", "Computer science", "Microbiology"],c:0},
+    {q:"Psychology is not an independent science, but dependent on other fields.",o:["True", "False"],c:1},
+    {q:"The study of changes in an individual’s behavior during his/her lifetime is called ----------.",o:["Hormonal psychology", "Gender psychology", "Developmental Psychology", "Genetics or Heredity"],c:2},
+    {q:"The study of differences and similarities in the behavior of animals of different species is called - -----------------------.",o:["Developmental psychology", "Cultural psychology", "Personality psychology", "Comparative Psychology"],c:3},
+    {q:"Humans are incapable of learning.",o:["True", "False"],c:1}
+  ]},
+  { id:"w1", name:"Week 1 – Psychology of Learning", qs:[
+    {q:"Learning is often seen as the contiguous causal effect of ____ on behavior.",o:["blood", "bone density", "trauma", "experience"],c:3},
+    {q:"In order to say that learning has occurred, a hidden change in behavior must occur.",o:["True", "False"],c:1},
+    {q:"Which of the following is not a mental construct?",o:["skeleton", "knowledge", "representations", "associations"],c:0},
+    {q:"Learning changes the ___ structure of the brain through the process of continuous interactions between the learner and the external environment.",o:["physical", "social", "biological", "none of the given"],c:0},
+    {q:"___ shapes the learning process.",o:["Only thoughts", "Only emotions", "Both thoughts and emotions", "Neither thoughts nor emotions"],c:2},
+    {q:"Watson's work included the famous Little Albert experiment in which he conditioned a small child to ___ a white rat.",o:["fear", "love", "hate", "play with"],c:0},
+    {q:"Behaviorism dominated psychology for much of the early ___ century.",o:["20th", "19th", "18th", "17th"],c:0},
+    {q:"The state of “conscious incompetence” may be valuable ____ of a learning experience.",o:["at the end", "in the middle", "2 years after the end", "at the start"],c:3},
+    {q:"Which of the following is not an outcome of effective e-learning?",o:["wider range of strategies", "more reflective approach", "more positive emotions towards learning", "more disconnected knowledge"],c:3},
+    {q:"Instrumental conditioning is an example of ___ learning.",o:["sensitization", "habituation", "associative", "meaningful"],c:2}
+  ]},
+  { id:"w2", name:"Week 2 – Psychology of Learning", qs:[
+    {q:"The three major types of learning described by ___ psychology are classical conditioning, operant conditioning and observational learning.",o:["cognitive", "behavioral", "emotional", "evolutionary"],c:1},
+    {q:"According to the view of Watson, psychology is ___.",o:["subjective", "only descriptive", "experimental", "about internal mental processes that cannot be measured and observed"],c:2},
+    {q:"___ is given by Ivan Pavlov.",o:["Operant conditioning", "Functional conditioning", "Classical conditioning", "Modern conditioning"],c:2},
+    {q:"The process by which organisms learn to respond to certain stimuli but not to others is known as ___.",o:["stimulus generalization", "stimulus appreciation", "stimulus discrimination", "stimulus differentiation"],c:2},
+    {q:"Higher-order conditioning is intrinsically weaker than its first-order counterpart.",o:["True", "False"],c:0},
+    {q:"____ is the process of gradually changing the quality of a response.",o:["Shaping", "Modeling", "Cueing", "Shifting"],c:0},
+    {q:"The works of ___ were instrumental in engendering the dramatic shift from behaviorism to cognitive theories.",o:["Edward C. Tolman", "Jean Piaget", "German Gestalt", "All of the given"],c:3},
+    {q:"___ intelligence is the ability to perceive the visual–spatial world accurately and involves sensitivity to color, line, shape, form, space, and the potential for recognizing and manipulating the patterns of spaces.",o:["Interpersonal", "Spatial", "Bodily-kinesthetic", "Linguistic"],c:1},
+    {q:"Sternberg proposed his theory in 1985 as an alternative to the idea of the ___.",o:["general intelligence factor", "multiple intelligences", "specific intelligence factor", "unconscious intelligence"],c:0},
+    {q:"Which of the following is not a kind of product in the structure of intellect model?",o:["symbolic", "classes", "systems", "implications"],c:0}
+  ]},
+  { id:"w3", name:"Week 3 – Psychology of Learning", qs:[
+    {q:"The connections between nerves cells are called ___.",o:["systems", "syntaxes", "neurons", "synapses"],c:3},
+    {q:"In order to create a ___, information must be changed into a usable form, which occurs through a process known as encoding.",o:["past memory", "new imagination", "new memory", "past imagination"],c:2},
+    {q:"Calling back the stored information in response to some cue for use in a process or activity is called ___.",o:["Retrieval", "Recall", "Recollection", "All of the given"],c:3},
+    {q:"For many with ___ deficits, reading facial expressions and knowing how to respond are confusing daily challenges.",o:["memory", "intelligence", "social cognition", "biological cognition"],c:2},
+    {q:"The Information Processing View of Learning assumes that there are limits to how much information can be processed at each stage.",o:["True", "False"],c:0},
+    {q:"The Information Processing View of Learning assumes that information process is involved in ___",o:["forgetting", "remembering", "perceiving", "All of the given"],c:3},
+    {q:"The capacity of the sensory register is ___.",o:["very small", "very large", "7+/-2 chunks", "unlimited"],c:1},
+    {q:"Most children do not begin to engage in the process of rehearsal on their own until about age ___.",o:["seven", "two", "thirteen", "one"],c:0},
+    {q:"___ provides an interface between the sub-systems of working memory and the part of long term memory specialized for episodic memory.",o:["Phonological loop", "Visuo-spatial sketchpad", "Retrieval buffer", "Episodic buffer"],c:3},
+    {q:"Memories of specific episodes of one’s life refers to ___.",o:["declarative memory", "experimental episodic memory", "autobiographical episodic memory", "procedural memory"],c:2}
+  ]},
+  { id:"w4", name:"Week 4 – Psychology of Learning", qs:[
+    {q:"___ thinking is the ability to create mental representations of objects, places, events, or people in your mind.",o:["General", "Creative", "Divergent", "Symbolic"],c:3},
+    {q:"We compare new information to our ___ of the person, place, or thing, so we know how to categorize the new information mentally.",o:["protofit", "protobite", "prototype", "none of the given"],c:2},
+    {q:"Which of the following is not true?",o:["Thinking is a higher mental process", "Thinking is a sub-vocal talking", "Thinking is fulfilling a need or problem solving", "Thinking is only done in verbal symbols"],c:3},
+    {q:"Mental images are ___.",o:["Auditory", "Visual", "Gustatory", "All of the given"],c:3},
+    {q:"___ organize complex phenomena into simpler, easily understandable, and usable categories and help to solve our problems.",o:["Concepts", "Propositions", "Constructs", "Components"],c:0},
+    {q:"The lowermost level of Bloom’s taxonomy is ___.",o:["remember", "apply", "understand", "analyze"],c:0},
+    {q:"The psychomotor domain of the Bloom’s taxonomy is concerned with ___.",o:["Biological makeup", "Thoughts and beliefs", "Feelings and emotions", "Skilled behavior"],c:3},
+    {q:"Which of the following is an example of meta-cognition skills?",o:["Ignoring your limits", "Self-monitoring", "Skimming all important information", "All of the given"],c:1},
+    {q:"___ critical thinking skill helps you analyze and process information to come to an unbiased conclusion.",o:["Open-mindedness", "Self-regulation", "Self-control", "Observation"],c:0},
+    {q:"The inspiration phase of the creative thinking process refers to the ___ stage.",o:["Incubation", "Insight", "Evaluation", "Preparation"],c:3}
+  ]},
+  { id:"w5", name:"Week 5 – Psychology of Learning", qs:[
+    {q:"Which of the following is true about motivation?",o:["It is a physical impulse", "It is an external process", "It has a willingness to activate but not channel the attitudes of learners", "None of the given"],c:3},
+    {q:"The term “motivation” comes from a ___ word.",o:["Greek", "Latin", "Hindi", "Bengali"],c:1},
+    {q:"It is called extrinsic motivation if causal factor is ___.",o:["curiosity", "social pressure", "self-satisfaction", "needs"],c:1},
+    {q:"___ motivation is considered to be more crucial for students as it is associated with deep learning, better performance and self-efficacy.",o:["Intrinsic", "Extrinsic", "Introjected regulation", "None of the given"],c:0},
+    {q:"___ proposed that there are three primary drives that drive human behavior.",o:["Hull", "Watson", "Piaget", "Gestalt"],c:0},
+    {q:"Expectancy Theory of Motivation was developed by ___.",o:["Vroom", "Hull", "Murray", "None of the given"],c:0},
+    {q:"An example of ___ is thinking, “If I work hard I can achieve the targets my boss has set for me”.",o:["purposeful", "valence", "instrumentality", "expectancy"],c:3},
+    {q:"In SMART goals, T stands for ___.",o:["Temporary", "Time-based", "Tough", "Testing"],c:1},
+    {q:"Friendship is a ___ need in Maslow’s hierarchy.",o:["Love and belonging", "Esteem", "Physiological", "Safety"],c:0},
+    {q:"___ theory differentiates between autonomous motivation and controlled motivation.",o:["Arousal", "Goal-setting", "Need hierarchy", "Self-determination"],c:3}
+  ]},
+  { id:"w6", name:"Week 6 – Psychology of Learning", qs:[
+    {q:"According to Daniel Goleman, ___ component of emotional intelligence focuses on how we handle relationships with others.",o:["self-awareness", "motivation", "empathy", "emotional regulation"],c:2},
+    {q:"Emotional intelligence can be considered a type of ___ intelligence.",o:["academic", "genetic", "social", "external"],c:2},
+    {q:"Noticing a difficult emotion and slowing down or resisting any impulsive action that may follow highlights ___ component of emotional intelligence.",o:["Self-regulation", "Motivation", "Emotional literacy", "Empathy"],c:0},
+    {q:"The following are signs of emotional intelligence, except ___.",o:["strong sense of curiosity", "holding onto mistakes", "ability to manage emotions in difficult situations", "self-confidence"],c:1},
+    {q:"Perceiving emotions means ___.",o:["Ignoring signals", "Understanding only what somebody is saying to you", "Understanding only somebody’s facial expression", "Understanding both verbal and nonverbal signals"],c:3},
+    {q:"___ suggests that 10 distinct components provide the scaffolding of emotionally and socially intelligent behaviors:",o:["Bar-On", "Goleman", "Salovey", "Mayer"],c:0},
+    {q:"Which of the following is a facilitator of EQ?",o:["optimism", "happiness", "independence", "all of the given"],c:3},
+    {q:"___ is a strategy for improving one’s self-awareness.",o:["rejecting feedback", "using critical self-talk daily", "developing a fixed mindset", "pursuing one’s passion"],c:3},
+    {q:"Having students create autobiographies is an example of creating opportunities for ___.",o:["emotional labor", "emotional contagion", "metacognition", "none of the given"],c:2},
+    {q:"Which of the following is not true about management of emotions?",o:["It is essentially a private act", "It is directly regulated by others", "It is influenced by cultural norms", "It is influenced by what society defines as appropriate to feel and express"],c:1}
+  ]},
   { id:"w7", name:"Week 7 – Psychology of Learning", qs:[
     {q:"Which of the following is false about learning according to Gagne’s definition?",o:["It is a change in human disposition","It persists over a period of time","It is simply ascribable to processes of growth","None of the above"],c:2},
     {q:"Manual or physical skills come under ___ component of Bloom’s taxonomy.",o:["Cognitive","Affective","Psychomotor","Physical"],c:2},
@@ -198,7 +284,7 @@ const SETS = [
     {q:"The central tenet of Bandura’s social-cognitive theory is that people seek to develop a sense of ___ over the important events in their lives.",o:["agency","dependency","attachment","emotion"],c:0},
     {q:"___ hypothesis suggests that social processes influence how information is selected, organized, integrated, and retrieved.",o:["activation","cognitive influence","interaction","social cue strength"],c:1}
   ]},
-  { id:"sus", name:"Sustainability & ESD", qs:[
+  { id:"w12", name:"Week 12 – Sustainability & ESD", qs:[
     {q:"Sustainability in economic sustainability is ___.",o:["multidimensional","bidimensional","unidimensional","none of the given"],c:0},
     {q:"The term \"sustainable development\" was first mentioned in a book related to the 1972 UN Stockholm conference on ___.",o:["water","poverty","economic crisis","human environment"],c:3},
     {q:"Environmental sustainability focuses on impacts of processes, products and services on ___.",o:["water","biodiversity","human health","all of the given"],c:3},
