@@ -8,6 +8,7 @@ const axios = require("axios");
 const cloudinary = require("cloudinary").v2;
 const path = require("path");
 const { GoogleGenAI } = require("@google/genai");
+const { createChunkStore } = require("./lib/chunkStore");
 
 dotenv.config();
 
@@ -58,7 +59,7 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 // 🟢 FIX #2 APPLIED: Stream map is now global to handle user disconnects/reconnects
-const activeUploadStreams = new Map();
+const chunkStore = createChunkStore(uploadDir);
 
 io.on("connection", (socket) => {
   console.log("🟢 Socket connected:", socket.id);
@@ -66,27 +67,10 @@ io.on("connection", (socket) => {
 
   socket.on("video-chunks", (data) => {
     try {
-      const filePath = path.join(uploadDir, data.filename);
-      const chunkBuffer = Buffer.from(data.chunks);
-
-      let writeStream = activeUploadStreams.get(data.filename);
-
-      if (!writeStream) {
-        writeStream = fs.createWriteStream(filePath, { flags: "a" });
-        activeUploadStreams.set(data.filename, writeStream);
-
-        writeStream.on("error", (err) => {
-          console.error("🔴 Stream error:", err);
-          activeUploadStreams.delete(data.filename);
-        });
-      }
-
       // This guarantees chronological order!
-      writeStream.write(chunkBuffer, (err) => {
-        if (err) {
-          console.error("🔴 Error writing chunk:", err);
-          socket.emit("upload-error", { message: "Failed to save chunk" });
-        }
+      chunkStore.appendChunk(data.filename, data.chunks, (err) => {
+        console.error("🔴 Error writing chunk:", err);
+        socket.emit("upload-error", { message: "Failed to save chunk" });
       });
     } catch (error) {
       console.error("🔴 Error processing video chunk:", error);
@@ -95,19 +79,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("process-video", async (data) => {
-    const filePath = path.join(uploadDir, data.filename);
+    let filePath;
+    let isCloudinary = false;
 
     try {
       console.log("🟢 Processing video:", data.filename);
 
       // 🟢 FIX #1 APPLIED: Securely close the write stream before reading
-      const writeStream = activeUploadStreams.get(data.filename);
-      if (writeStream) {
-        await new Promise((resolve) => {
-          writeStream.end(resolve);
-        });
-        activeUploadStreams.delete(data.filename); // Clean up memory map
-      }
+      filePath = await chunkStore.finalize(data.filename);
 
       if (!fs.existsSync(filePath)) {
         throw new Error("Video file not found");
@@ -130,7 +109,6 @@ io.on("connection", (socket) => {
 
       // Determine video serving URL (Cloudinary or local Express hosting)
       let videoUrl = `http://localhost:5001/videos/${data.filename}`;
-      let isCloudinary = false;
 
       const isRealCloudinary =
         process.env.CLOUDINARY_CLOUD_NAME &&
@@ -301,7 +279,7 @@ io.on("connection", (socket) => {
         error.message || error,
       );
     } finally {
-      if (isCloudinary && fs.existsSync(filePath)) {
+      if (isCloudinary && filePath && fs.existsSync(filePath)) {
         fs.unlink(filePath, (err) => {
           if (err) console.error("🔴 Error deleting file:", err);
           else console.log("🟢 Cleaned up local file:", data.filename);
